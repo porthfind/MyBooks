@@ -5,7 +5,7 @@
 			
 			<h1>Welcome ${name}</h1> 
 			<br>
-			<h3>My Books - </h3>
+			<h3>My Books</h3>
 			
 			<div class="row">
 			    <div class="col">

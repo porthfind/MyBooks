@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,17 +54,17 @@ public class BookController {
 	public String showNewBookPage(ModelMap model) {
 		Book book = new Book();
 		model.put("book", book);
+		model.put("operation", "add");
 		return "addUpdateBook";
 	}
 	
-	@RequestMapping(value="add-book", method=RequestMethod.POST)
+	@PostMapping(value="add-book")
 	public String addNewBook(ModelMap model, @Valid Book book, BindingResult result) { 
 		
-		if(result.hasErrors())
+		if(result.hasErrors()) {
 			return "addUpdateBook";
-		
-		//final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-				
+		}
+					
 		book.setUsername(getLoggedInUsername());
 		
 		bookRepository.save(book);

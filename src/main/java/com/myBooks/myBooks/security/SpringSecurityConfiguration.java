@@ -16,7 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SpringSecurityConfiguration {
-
 	
 	@Bean
 	public InMemoryUserDetailsManager createUserDetailsManager() {
@@ -27,8 +26,6 @@ public class SpringSecurityConfiguration {
 		return new InMemoryUserDetailsManager(userDetails1, userDetails2);
 	}
 	
-
-
 	private UserDetails createNewUser(String username, String password) {
 		Function<String, String> passwordEncoder
 			= input -> passwordEncoder().encode(input);
