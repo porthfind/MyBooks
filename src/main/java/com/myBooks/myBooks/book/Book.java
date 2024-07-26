@@ -2,6 +2,8 @@ package com.myBooks.myBooks.book;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,8 +27,10 @@ public class Book {
 	private String isbn;
 	
 	@NotNull(message = "Started Date can not be null.")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private LocalDate startedDate;
 	
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private LocalDate endDate;
 	
 	@Size(max=50, message = "Comment must be {max} characters long.")

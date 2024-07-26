@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class SpringSecurityConfiguration {
@@ -25,6 +26,7 @@ public class SpringSecurityConfiguration {
 		
 		return new InMemoryUserDetailsManager(userDetails1, userDetails2);
 	}
+	
 	
 	private UserDetails createNewUser(String username, String password) {
 		Function<String, String> passwordEncoder
@@ -43,6 +45,11 @@ public class SpringSecurityConfiguration {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	@Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 	
 	
 	//All URLs are protected

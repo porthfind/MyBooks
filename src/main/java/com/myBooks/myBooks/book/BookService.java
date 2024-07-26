@@ -1,5 +1,6 @@
 package com.myBooks.myBooks.book;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -26,7 +27,8 @@ public class BookService{
 	
 	public Book findById(int id) {
 		Predicate<? super Book> predicate = book -> book.getId() == id;
-		return books.stream().filter(predicate).findFirst().get();
+		Book book = books.stream().filter(predicate).findFirst().get();
+		return book;
 	}
 	
 	public void updateBook(@Valid Book book) {
@@ -55,24 +57,7 @@ public class BookService{
 		return false;
 	}
 	
-	private boolean validateISBN(String isbn) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
-        String url = BASE_URL + isbn + "&format=json";
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
-            }
-
-            // Verifica se o corpo da resposta não está vazio, o que indica que o ISBN é válido
-            String responseBody = response.body().string();
-            return !responseBody.equals("{}");
-        }
-    }*/
+*/
 	/**TODO:Isbn Validation**/
 	
 	/**TODO: Log **/
