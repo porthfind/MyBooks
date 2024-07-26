@@ -23,7 +23,6 @@ public class Book {
 	private String name;
 	
 	@NotBlank(message = "Isbn can not be null.")
-	//@IsbnValidation
 	private String isbn;
 	
 	@NotNull(message = "Started Date can not be null.")

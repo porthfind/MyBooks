@@ -55,7 +55,7 @@ public class BookController {
 		return "listBooks";
 	}
 	
-	/*-------------------Add Books---------------------------------*/
+	/*-------------------Add/Update Books---------------------------------*/
 	@RequestMapping(value = "add-book", method = RequestMethod.GET)
 	public String showNewBookPage(ModelMap model) {
 		Book book = new Book();
@@ -64,7 +64,7 @@ public class BookController {
 		return "addUpdateBook";
 	}
 	
-	@PostMapping(value="add-book")
+	@PostMapping(value={"add-book", "update-book"})
 	public String addNewBook(ModelMap model, @Valid Book book, BindingResult result) { 
 		
 		if(result.hasErrors()) {
@@ -96,19 +96,6 @@ public class BookController {
 		Book book = bookRepository.findById(id).get();
 		model.put("book", book);
 		return "addUpdateBook";
-	}
-	
-	@RequestMapping(value = "update-book", method = RequestMethod.POST)
-	public String updateBook(ModelMap model, @Valid Book book, BindingResult result) {
-		
-		if(result.hasErrors())
-			return "addUpdateBook";
-		
-		//String username = (String) model.get("name");
-		book.setUsername(getLoggedInUsername());
-	
-		bookRepository.save(book);
-		return "redirect:list-books";
 	}
 
 }
