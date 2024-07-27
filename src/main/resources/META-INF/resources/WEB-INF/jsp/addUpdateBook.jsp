@@ -29,13 +29,13 @@
 			   
 			
 			<fieldset class="mb-3">
-				<form:label path="startedDate">Started Date: </form:label>
+				<form:label path="startedDate">Start Reading Date: </form:label>
 				<form:input type="text" path="startedDate"/><br>
 				<form:errors path="startedDate" cssClass="text-warning"/>
 			</fieldset>
 			
 			<fieldset class="mb-3">
-				<form:label path="endDate">End Date: </form:label>
+				<form:label path="endDate">End Reading Date: </form:label>
 				<form:input type="text" path="endDate"/>
 				<form:errors path="endDate" cssClass="text-warning"/>
 			</fieldset>

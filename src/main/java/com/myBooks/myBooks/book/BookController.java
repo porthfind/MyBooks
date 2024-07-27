@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.myBooks.myBooks.isbn.ISBNService;
-
 import jakarta.validation.Valid;
 
 @Controller
@@ -30,7 +28,7 @@ public class BookController {
 	}
 	
 	@Autowired
-	ISBNService isbnService;
+	BookService bookService;
 
 	private String getLoggedInUsername() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -70,8 +68,16 @@ public class BookController {
 		if(result.hasErrors()) {
 			return "addUpdateBook";
 		}
-		else if(!isbnService.isValidISBN(book.getIsbn())) {
-			result.rejectValue("isbn", "error.book", "ISBN is not valid. Please insert a valid ISBN.");
+		else if(!bookService.isValidISBN(book.getIsbn())) {
+			result.rejectValue("isbn", "message.isbnInvalid");
+			return "addUpdateBook";
+		}
+		else if(!bookService.isStartReadingDateValid(book.getStartedDate())) {
+			result.rejectValue("isbn", "message.startReadingDateInvalid");
+			return "addUpdateBook";
+		}
+		else if(bookService.isStartReadingDateAfterEndReadingDate(book.getStartedDate(), book.getEndDate())) {
+			result.rejectValue("isbn", "message.startReadingDateAfterEndReadingDate");
 			return "addUpdateBook";
 		}
 					

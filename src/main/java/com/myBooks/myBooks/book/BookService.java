@@ -1,11 +1,14 @@
 package com.myBooks.myBooks.book;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.validation.Valid;
 
@@ -13,8 +16,12 @@ import jakarta.validation.Valid;
 @Service
 public class BookService{
 	
+	private final RestTemplate restTemplate;
 	private static List<Book> books = new ArrayList<>();
-	//private static final String BASE_URL = "https://openlibrary.org/api/books?bibkeys=ISBN:";
+	
+    public BookService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 	
 	public List<Book> getBooks(){
 		return books;
@@ -38,6 +45,42 @@ public class BookService{
 	
 	public void addBook(@Valid Book book) {
 		books.add(book);
+	}
+	
+	//--Validations-//
+  
+
+    public boolean isValidISBN(String isbn) {
+	    String url = UriComponentsBuilder.fromHttpUrl("https://www.googleapis.com/books/v1/volumes")
+	            .queryParam("q", "isbn:" + isbn)
+	            .toUriString();
+	
+	    try {
+	        String response = restTemplate.getForObject(url, String.class);
+	        return response != null && response.contains("\"totalItems\": 1");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+    }
+	
+	public boolean isStartReadingDateValid(LocalDate startReadingDate) {
+		if(startReadingDate.isAfter(LocalDate.now()))
+			return false;
+		
+		return true;
+	}
+	
+	public boolean isStartReadingDateAfterEndReadingDate(LocalDate startReadingDate, LocalDate endReadingDate){
+		if(endReadingDate == null)
+			return false;
+		else {
+			if(startReadingDate.isAfter(endReadingDate))
+				return true;
+			else
+				return false;
+		}
+			
 	}
 	
 	/**TODO:Isbn Validation**/
