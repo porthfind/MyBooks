@@ -1,4 +1,4 @@
-package com.myBooks.myBooks.book;
+package com.myBooks.myBooks.controller;
 
 import java.util.List;
 
@@ -14,18 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.myBooks.myBooks.dto.BookDTO;
+import com.myBooks.myBooks.model.Book;
+import com.myBooks.myBooks.service.BookService;
+
 import jakarta.validation.Valid;
 
 @Controller
 @SessionAttributes("name")
 public class BookController {
-
-	private BookRepository bookRepository;
-	
-	public BookController(BookRepository bookRepository) {
-		super();
-		this.bookRepository = bookRepository;
-	}
 	
 	@Autowired
 	BookService bookService;
@@ -38,7 +35,7 @@ public class BookController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String goToListBooksPage(ModelMap model) {
 		
-		List<Book> books = bookRepository.findByUsername(getLoggedInUsername());
+		List<BookDTO> books = bookService.getAllBooksFromUser(getLoggedInUsername());
 		model.addAttribute("books", books);
 		model.put("name", getLoggedInUsername());
 		
@@ -47,7 +44,8 @@ public class BookController {
 	
 	@RequestMapping("list-books")
 	public String listAllBooks(ModelMap model) {
-		List<Book> books = bookRepository.findByUsername(getLoggedInUsername());
+		List<BookDTO> books = bookService.getAllBooksFromUser(getLoggedInUsername());
+		
 		model.addAttribute("books", books);
 		
 		return "listBooks";
@@ -83,7 +81,7 @@ public class BookController {
 					
 		book.setUsername(getLoggedInUsername());
 		
-		bookRepository.save(book);
+		bookService.saveBook(book);
 		return "redirect:list-books";
 	}
 	
@@ -91,7 +89,7 @@ public class BookController {
 	@RequestMapping(value = "delete-book", method = RequestMethod.GET)
 	public String deleteBook(@RequestParam int id) {
 		//Delete
-		bookRepository.deleteById(id);
+		bookService.deleteByIdRepository(id);
 		return "redirect:list-books";
 	}
 	
@@ -99,7 +97,7 @@ public class BookController {
 	@RequestMapping(value = "update-book", method = RequestMethod.GET)
 	public String showUpdateBookPage(@RequestParam int id, ModelMap model) {
 		
-		Book book = bookRepository.findById(id).get();
+		BookDTO book = bookService.findByIdRepository(id);
 		model.put("book", book);
 		return "addUpdateBook";
 	}
