@@ -89,7 +89,7 @@ public class BookController {
 	@RequestMapping(value = "delete-book", method = RequestMethod.GET)
 	public String deleteBook(@RequestParam int id) {
 		//Delete
-		bookService.deleteByIdRepository(id);
+		bookService.deleteById(id);
 		return "redirect:list-books";
 	}
 	
@@ -97,9 +97,18 @@ public class BookController {
 	@RequestMapping(value = "update-book", method = RequestMethod.GET)
 	public String showUpdateBookPage(@RequestParam int id, ModelMap model) {
 		
-		BookDTO book = bookService.findByIdRepository(id);
+		BookDTO book = bookService.findById(id);
 		model.put("book", book);
 		return "addUpdateBook";
+	}
+	
+	/*-------------------Details Books---------------------------------*/
+	@RequestMapping(value = "details-book", method = RequestMethod.GET)
+	public String bookDetail(@RequestParam int id, ModelMap model) {
+		
+		BookDTO bookDTO = bookService.findById(id);
+		model.put("book", bookDTO);
+		return "detailsBook";
 	}
 
 }

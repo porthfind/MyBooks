@@ -34,8 +34,8 @@
 							<td>${book.isbn}</td>
 							<td>${book.startedDate}</td>
 							<td>${book.endDate}</td>
-							<td><a href="delete-book?id=${book.id}" class="btn btn-outline-danger">Delete</a></td>
 							<td><a href="update-book?id=${book.id}" class="btn btn-outline-warning">Update</a></td>
+							<td><a href="details-book?id=${book.id}" class="btn btn-outline-warning">Detail</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

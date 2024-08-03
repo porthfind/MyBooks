@@ -29,16 +29,15 @@ public class BookService{
 		log.info("Book {} is save.", book.getId());
 	}
 	
-	public void deleteByIdRepository(int bookId) {
+	public void deleteById(int bookId) {
 		bookRepository.deleteById(bookId);
 		log.info("Book {} was deleted.", bookId);
 	}
 	
-	public BookDTO findByIdRepository(int bookId) {
+	public BookDTO findById(int bookId) {
 		return convertEntityToDto(bookRepository.findById(bookId).get());
 	}
 	
-	/**TODO: Mudar codigo**/
 	public List<BookDTO> getAllBooksFromUser(String username){
 		if(username != null) {
 			List<Book> books = bookRepository.findByUsername(username);
@@ -101,8 +100,7 @@ public class BookService{
 				return true;
 			else
 				return false;
-		}
-			
+		}	
 	}
 	
 }
