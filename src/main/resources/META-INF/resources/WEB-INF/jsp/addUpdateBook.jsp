@@ -4,7 +4,7 @@
 	<div class="container">
 		
 		<c:choose>
-			<c:when test="${not empty book.name and operation=='add'}">
+			<c:when test="${not empty book && book.id != 0}">
 				<h1>Update Book</h1>
 			</c:when>
 			<c:otherwise>

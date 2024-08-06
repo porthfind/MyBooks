@@ -39,6 +39,8 @@
 				</tr>
 		
 		</table>
+		<br>
+		<input type="button" class="btn btn-outline-primary" value="Cancel" onclick="history.back();"/>
 	
 	</div>
 	

@@ -8,9 +8,12 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.myBooks.myBooks.dto.BookDTO;
 import com.myBooks.myBooks.model.Book;
@@ -23,6 +26,11 @@ public class BookServiceTests {
 
     @InjectMocks
     private BookService bookService;
+    
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 	
 	@Test
     public void BookService_DeleteBookById_ReturnVoid() {
@@ -46,6 +54,19 @@ public class BookServiceTests {
         Assertions.assertThat(bookReturn).isNotNull();
     }
 	
-	/**TODO: faltam restantes testes**/
+	@Test
+	public void BookService_SaveBook() {
+		Book book = Book.builder().name("As serviçais").isbn("9789896374952").startedDate(LocalDate.now()).build();
+		
+		when(bookRepository.save(Mockito.any(Book.class))).thenReturn(book);
+		
+		BookDTO bookDTO = bookService.convertEntityToDto(book);
+		Assertions.assertThat(bookDTO).isNotNull();
+	}
+	
+	@Test
+	public void BookService_getAllBooksFromUser() {
+		/**TODO**/
+	}
 
 }

@@ -56,7 +56,6 @@ public class BookController {
 	public String showNewBookPage(ModelMap model) {
 		Book book = new Book();
 		model.put("book", book);
-		model.put("operation", "add");
 		return "addUpdateBook";
 	}
 	

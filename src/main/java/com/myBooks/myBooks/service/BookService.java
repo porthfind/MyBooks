@@ -56,7 +56,7 @@ public class BookService{
 	
 	//-- Convert Entity to DTO --//
 	
-	private BookDTO convertEntityToDto(Book book) {
+	public BookDTO convertEntityToDto(Book book) {
 		BookDTO bookDto = new BookDTO();
 		
 		bookDto.setId(book.getId());
