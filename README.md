@@ -6,5 +6,6 @@ Technologies used in this project until now:
 
 - Java v17
 - Spring Boot v3.3.1
+- JUnit 5
 - Docker v4.32.0
 - MySql v8.0.33
